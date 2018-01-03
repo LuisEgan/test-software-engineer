@@ -38,6 +38,7 @@ class CarInsurance {
         if (price > 0) {
           if (!isMC) {
             price -= 1;
+            (isSS) && (price -= 1);
           }
         }
       } else {
@@ -66,9 +67,7 @@ class CarInsurance {
             if (price > 0) {
               if (!isMC) {
                 price -= 1;
-                if(isSS) {
-                  price -= 1;
-                }
+                (isSS) && (price -= 1);
               }
             }
           } else {
