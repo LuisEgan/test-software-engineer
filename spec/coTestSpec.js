@@ -18,10 +18,15 @@ describe("Co Test", function() {
       new Product("Special Full Coverage", 5, 49),
       new Product("Super Sale", 3, 6)
     ];
+    const sellInArr = [9,1,4,0,-1,14,9,4,2];
+    const priceArr = [19,1,6,80,80,21,50,50,4];
     const coTest = new CarInsurance(productsArr);
     const products = coTest.updatePrice();
-    expect(products[0].sellIn).equal(9);
-    expect(products[0].price).equal(19);
+
+    products.forEach( (product, i) => {
+      expect(product.sellIn).equal(sellInArr[i]);
+      expect(product.price).equal(priceArr[i]);
+    });
   });
 
 });
