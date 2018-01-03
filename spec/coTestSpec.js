@@ -142,8 +142,37 @@ describe("Co Test", function() {
     });
   });
 
-  // Special Coverage scenarios
-  it("Special Coverage scenarios", () => {
+  // Full Coverage scenarios
+  it("Full Coverage scenarios", () => {
+    // Products at day 0 with Spec Co with and without max price
+    const productsAtDayZero = [
+      new Product('Full Coverage', 15, 20), //>10
+      new Product('Full Coverage', 9, 20), //>5
+      new Product('Full Coverage', 4, 20), //>0
+      new Product('Full Coverage', -1, 20), //<0
+      new Product('Full Coverage', 15, 50), //>10
+      new Product('Full Coverage', 9, 50), //>5
+      new Product('Full Coverage', 4, 50), //>0
+      new Product('Full Coverage', -1, 50), //<0
+    ];
+
+    // All sellIns at day 1
+    const sellInArr = [14,8,3,-2,14,8,3,-2];
+
+    // All prices at day 1
+    const priceArr = [21,21,21,22,50,50,50,50];
+
+    const coTest = new CarInsurance(productsAtDayZero);
+
+    // Check if everything changes in 1 day as it should
+    coTest.updatePrice().forEach( (product, i) => {
+      expect(product.sellIn).equal(sellInArr[i]);
+      expect(product.price).equal(priceArr[i]);
+    });
+  });
+
+  // Special Full Coverage scenarios
+  it("Special Full Coverage scenarios", () => {
     // Products at day 0 with Spec Co with and without max price
     const productsAtDayZero = [
       new Product('Special Full Coverage', 15, 20), //>10
@@ -172,7 +201,7 @@ describe("Co Test", function() {
 
   });
 
-  // Super Sale eval
+  // Super Sale scenarios
   it("Super Sale scenarios", () => {
     // Products at day 0 with expired coverage
     const productsAtDayZero = [

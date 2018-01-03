@@ -62,7 +62,6 @@ class CarInsurance {
       if (product.sellIn < 0) {
         if (!isFC) {
           if (!isSFC) {
-            // If the product is MC or SS
             if (product.price > 0) {
               if (!isMC) {
                 product.price -= 1;
