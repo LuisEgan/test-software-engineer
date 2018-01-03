@@ -20,7 +20,8 @@ describe("Co Test", function() {
     ];
     const coTest = new CarInsurance(productsArr);
     const products = coTest.updatePrice();
-    expect(products[0].name).equal("Medium Coverage");
+    expect(products[0].sellIn).equal(9);
+    expect(products[0].price).equal(19);
   });
 
 });
