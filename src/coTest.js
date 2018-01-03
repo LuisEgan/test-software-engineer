@@ -11,53 +11,81 @@ class CarInsurance {
     this.products = products;
   }
   updatePrice() {
-    for (var i = 0; i < this.products.length; i++) {
-      if (this.products[i].name != 'Full Coverage' && this.products[i].name != 'Special Full Coverage') {
-        if (this.products[i].price > 0) {
-          if (this.products[i].name != 'Mega Coverage') {
-            this.products[i].price = this.products[i].price - 1;
+    const { products } = this;
+    
+    const COVERAGES = {
+      FC: 'Full Coverage',
+      SFC: 'Special Full Coverage',
+      MC: 'Mega Coverage',
+      SS: 'Super Sale'
+    }
+
+    const MAX_PRICE = 50;
+    const MC_PRICE = 80;
+
+    products.forEach( product => {
+      let { name, price, sellIn } = product;
+
+      const isFC = name === COVERAGES.FC;
+      const isSFC = name === COVERAGES.SFC;
+      const isMC = name === COVERAGES.MC;
+      const isSS = name === COVERAGES.SS;
+
+      const atMaxPrice = price >= MAX_PRICE;
+
+      // If the item is not a Full coverage type
+      if (!isFC && !isSFC) {
+        if (price > 0) {
+          if (!isMC) {
+            price -= 1;
           }
         }
       } else {
-        if (this.products[i].price < 50) {
-          this.products[i].price = this.products[i].price + 1;
-          if (this.products[i].name == 'Special Full Coverage') {
-            if (this.products[i].sellIn < 11) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
+        if (!atMaxPrice) {
+          price += 1;
+          if (isSFC) {
+            if (sellIn < 11) {
+              (!atMaxPrice) && (price += 1);
             }
-            if (this.products[i].sellIn < 6) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
+            if (sellIn < 6) {
+              (!atMaxPrice) && (price += 1);
             }
           }
         }
       }
-      if (this.products[i].name != 'Mega Coverage') {
-        this.products[i].sellIn = this.products[i].sellIn - 1;
+
+      // Decrease sellIn for all products, except for the MC ones.
+      if (!isMC) {
+        sellIn -= 1;
       }
-      if (this.products[i].sellIn < 0) {
-        if (this.products[i].name != 'Full Coverage') {
-          if (this.products[i].name != 'Special Full Coverage') {
-            if (this.products[i].price > 0) {
-              if (this.products[i].name != 'Mega Coverage') {
-                this.products[i].price = this.products[i].price - 1;
+
+      if (sellIn < 0) {
+        if (!isFC) {
+          if (!isSFC) {
+            // If the product is MC or SS
+            if (price > 0) {
+              if (!isMC) {
+                price -= 1;
+                if(isSS) {
+                  price -= 1;
+                }
               }
             }
           } else {
-            this.products[i].price = this.products[i].price - this.products[i].price;
+            price = 0;
           }
         } else {
-          if (this.products[i].price < 50) {
-            this.products[i].price = this.products[i].price + 1;
-          }
+          (!atMaxPrice) && (price += 1);
         }
       }
-    }
 
-    return this.products;
+      // Fallback for MC to ensure its price is always MC_PRICE
+      if (isMC) {
+        price = MC_PRICE;
+      }
+    });
+
+    return products;
   }
 }
 
