@@ -31,11 +31,8 @@ class CarInsurance {
       const isMC = name === COVERAGES.MC;
       const isSS = name === COVERAGES.SS;
 
-      const atMaxPrice = product.price >= MAX_PRICE;
-
       // If the product is not a Full coverage type
       if (!isFC && !isSFC) {
-        console.log(name, 'here');
         if (product.price > 0) {
           if (!isMC) {
             product.price -= 1;
@@ -43,14 +40,14 @@ class CarInsurance {
           }
         }
       } else {
-        if (!atMaxPrice) {
+        if (product.price < MAX_PRICE) {
           product.price += 1;
           if (isSFC) {
             if (product.sellIn < 11) {
-              (!atMaxPrice) && (product.price += 1);
+              (product.price < MAX_PRICE) && (product.price += 1);
             }
             if (product.sellIn < 6) {
-              (!atMaxPrice) && (product.price += 1);
+              (product.price < MAX_PRICE) && (product.price += 1);
             }
           }
         }
@@ -75,7 +72,7 @@ class CarInsurance {
             product.price = 0;
           }
         } else {
-          (!atMaxPrice) && (product.price += 1);
+          (product.price < MAX_PRICE) && (product.price += 1);
         }
       }
 
