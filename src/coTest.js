@@ -32,7 +32,7 @@ class CarInsurance {
       const isMC = name === COVERAGES.MC;
       const isSS = name === COVERAGES.SS;
 
-      // If the product is not a Full coverage type
+      // Check if the product is not a Full coverage type
       if (!isFC && !isSFC) {
         if (product.price > 0) {
           if (!isMC) {
