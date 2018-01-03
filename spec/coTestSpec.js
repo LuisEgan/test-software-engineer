@@ -6,7 +6,7 @@ const Product = coTest.Product;
 
 describe("Co Test", function() {
 
-  it("should foo", function() {
+  it("Coverage Report", function() {
     const productsArr = [
       new Product("Medium Coverage", 10, 20),
       new Product("Full Coverage", 2, 0),
@@ -21,12 +21,10 @@ describe("Co Test", function() {
     const sellInArr = [9,1,4,0,-1,14,9,4,2];
     const priceArr = [19,1,6,80,80,21,50,50,4];
     const coTest = new CarInsurance(productsArr);
-    const products = coTest.updatePrice();
 
-    products.forEach( (product, i) => {
+    coTest.updatePrice().forEach( (product, i) => {
       expect(product.sellIn).equal(sellInArr[i]);
       expect(product.price).equal(priceArr[i]);
     });
   });
-
 });
