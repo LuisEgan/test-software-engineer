@@ -9,19 +9,20 @@ class Product {
 class CarInsurance {
   constructor(products = []) {
     this.products = products;
-  }
-  updatePrice() {
-    const { products } = this;
-    
-    const COVERAGES = {
+
+    this.MAX_PRICE = 50;
+    this.MC_PRICE = 80;
+
+    this.COVERAGES = {
       FC: 'Full Coverage',
       SFC: 'Special Full Coverage',
       MC: 'Mega Coverage',
       SS: 'Super Sale'
-    }
-
-    const MAX_PRICE = 50;
-    const MC_PRICE = 80;
+    };
+  }
+  
+  updatePrice() {
+    const { products, COVERAGES, MAX_PRICE, MC_PRICE } = this;
 
     products.forEach( product => {
       let { name } = product;
